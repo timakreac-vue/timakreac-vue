@@ -201,9 +201,10 @@ export default {
       this.chosenGenre = e.target.textContent;
     },
     setUrlImg(index) {
-      return (this.gamesImages[index].url = this.gamesImages[index].url
-        .replace("t_thumb", "t_cover_big")
-        .replace("//", "https:"));
+      return (this.gamesImages[index].url = this.gamesImages[index].url.replace(
+        "t_thumb",
+        "t_cover_big"
+      ));
     }
   }
 };

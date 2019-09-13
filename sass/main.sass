@@ -219,9 +219,15 @@ a
         font-size: 25px
 
 
-.slideIn
+.slideInRight
     &-enter
         transform: translateX(-1000px)
+        opacity: 0
+        &-active
+            transition: all 0.5s
+.slideInLeft
+    &-enter
+        transform: translateX(1000px)
         opacity: 0
         &-active
             transition: all 0.5s

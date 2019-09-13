@@ -16,25 +16,31 @@
               Game
               <span>Box</span>
             </a>
-            <transition name="slideIn" appear>
+            <transition name="slideInRight" appear>
               <h1 class="header-gameTitle">God of war</h1>
             </transition>
-            <div class="header-gameInfo">
-              <span class="header-gameInfo_date">20th Apr, 2018</span>
-              <span class="header-gameInfo_studio">SIE Santa Monica Studio</span>
-            </div>
-            <a href="#" class="header-btn">View info</a>
+            <transition name="slideInRight" appear>
+              <div class="header-gameInfo" style="transition-delay: 0.2s;">
+                <span class="header-gameInfo_date">20th Apr, 2018</span>
+                <span class="header-gameInfo_studio">SIE Santa Monica Studio</span>
+              </div>
+            </transition>
+            <transition name="slideInRight" appear>
+              <a href="#" class="header-btn" style="transition-delay: 0.4s;">View info</a>
+            </transition>
           </div>
-          <div class="header-gameRating d-flex jcsb">
-            <div>
-              <h4 class="header-gameRating_title">Rating</h4>
-              <p class="header-gameRating_base">
-                Based on {{ gamesCard.length }}
-                <br />member ratings
-              </p>
+          <transition name="slideInLeft" appear>
+            <div class="header-gameRating d-flex jcsb" style="transition-delay: 0.6s;">
+              <div>
+                <h4 class="header-gameRating_title">Rating</h4>
+                <p class="header-gameRating_base">
+                  Based on {{ gamesCard.length }}
+                  <br />member ratings
+                </p>
+              </div>
+              <span class="header-gameRating_value">{{ setBestRating }}</span>
             </div>
-            <span class="header-gameRating_value">{{ setBestRating }}</span>
-          </div>
+          </transition>
         </div>
       </header>
 

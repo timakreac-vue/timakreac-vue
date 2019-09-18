@@ -1,0 +1,240 @@
+@import 'reset'
+*,*:before,*:after
+    box-sizing: border-box
+.container
+    max-width: 1230px
+    padding-right: 15px
+    padding-left: 15px
+    margin: 0 auto
+.d-flex
+    display: flex
+.jcc
+    justify-content: center
+.jcsb
+    justify-content: space-between
+.aic
+    align-items: center
+hr
+    opacity: 0.2
+body
+    font-family: 'Source Sans Pro', sans-serif
+    font-size: 15px
+a
+    text-decoration: none
+    color: #fff
+    transition: 0.5s
+.header
+    padding: 40px 0 60px
+    color: #fff
+    background-repeat: no-repeat
+    background-size: 100%
+    position: relative
+    box-shadow: inset 0 -110px 40px #000
+    & > *
+        position: relative
+        z-index: 1
+    &:before
+        content: ''
+        background: rgba(0,0,0,0.3)
+        
+        width: 100%
+        height: 100%
+        position: absolute
+        top: 0
+        left: 0
+    &-logo
+        margin-bottom: 360px
+        display: inline-block
+        font-size: 30px
+        text-transform: uppercase
+        & > span
+            font-weight: 900
+    &-gameTitle
+        margin-bottom: 8px
+        text-transform: uppercase
+        font-size: 45px
+        font-weight: 600
+        line-height: 56px
+    &-gameInfo
+        color: #ACAFAE
+        font-weight: 600
+        &_date
+            padding-right: 40px
+            position: relative
+            &:after
+                content: '|'
+                position: absolute
+                top: 0
+                right: 20px
+    &-btn
+        display: block
+        margin-bottom: 10px
+        font-size: 16px
+        font-weight: 600
+        margin-top: 30px
+        text-align: center
+        line-height: 45px
+        height: 45px
+        width: 160px
+        border-radius: 3px
+        background-color: #0652D9
+        text-transform: uppercase
+        &:hover,&:focus
+            background-color: darken(#0652D9,10%)
+    &-gameRating
+        margin-top: 480px
+        width: 220px
+        height: 80px
+        border: 1px solid rgba(255,255,255,0.2)
+        border-radius: 2px
+        background-color: rgba(73,76,98,0.2)
+        padding: 10px 20px 5px 20px
+        &_title
+            line-height: 20px
+        &_base
+            font-size: 12px
+            line-height: 15px
+            margin-top: 8px
+            opacity: 0.5
+        &_value
+            font-size: 48px
+            line-height: 60px
+            margin-top: auto
+
+.games
+    background-color: #F8F8F8
+    padding: 50px 0 50px
+    &-title
+        font-size: 24px
+        color: #0652d9
+        line-height: 24px
+        margin-bottom: 40px
+    &-cards
+        display: flex
+        flex-wrap: wrap
+    &-card
+        background-color: #fff
+        box-shadow: 0 1px 18px 0 rgba(0,0,0,0.1)
+        margin-bottom: 15px
+        border-radius: 3px 3px 0 0
+        overflow: hidden
+        display: flex
+        flex-direction: column
+        max-width: 290px
+        position: relative
+        min-height: 480px
+        margin-left: 5px
+        margin-right: 5px
+    &-cardBody
+        padding: 15px 20px 30px 20px
+        &_title
+            font-size: 20px
+            line-height: 25px
+            color: #494c62
+            margin-bottom: 5px
+            font-weight: 700
+        &_genre
+            color: #BABBC3
+            font-weight: 600
+            line-height: 20px
+        &_rating
+            margin-top: auto
+            width: 40px
+            height: 30px
+            border: 1px solid #0652D9
+            border-radius: 3px
+            text-align: center
+            line-height: 30px
+            font-size: 14px
+            color: #0652d9
+            position: absolute
+            bottom: 20px
+            right: 20px
+    &-card_img
+        position: relative
+        width: 290px
+        & > img
+            width: 100%
+            height: 370px
+        & > span
+            position: absolute
+            bottom: 25px
+            left: 20px
+            color: #BABBC3
+            font-size: 18px
+.footer
+    padding: 25px 0 30px
+    color: #000
+    &-logo
+        display: inline-block
+        color: #494C62
+        font-size: 30px
+        text-transform: uppercase
+        margin-bottom: 25px
+        & > span
+            font-weight: 900
+    &-menu
+        margin-bottom: 25px
+        display: flex
+        &_link
+            margin-left: 40px
+            color: #80818a
+    &-social
+        margin-top: 20px
+        & > a
+            margin-left: 8px
+            width: 20px
+            height: 20px
+            & > img
+                max-width: 20px
+.designed
+    margin-top: 20px
+    color: #80818a
+    font-size: 12px
+    opacity: 0.6
+.chooseGenre
+    height: 100vh
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    height: 500px
+    overflow: auto
+    width: 500px
+    margin: 0 auto
+    background: #FBEAFF
+    border-radius: 10px
+    &-title
+        font-size: 35px
+        text-align: center
+        margin-top: 50px
+        margin-bottom: 50px
+    li
+        color: #222
+        margin: 20px 0
+        border-radius: 10px
+        padding: 10px
+        background: #0081CF
+        font-size: 25px
+
+
+.slideInRight
+    &-enter
+        transform: translateX(-1000px)
+        opacity: 0
+        &-active
+            transition: all 0.5s
+.slideInLeft
+    &-enter
+        transform: translateX(1000px)
+        opacity: 0
+        &-active
+            transition: all 0.5s
+
+.slideInBottom
+    &-enter
+        transform: translateY(100vh)
+        opacity: 0
+        &-active
+            transition: all 0.8s ease
+@import 'media'

@@ -1,11 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    API_KEY: "a46549452918dfeab1f37161286dd77d",
+    installPrompt: null,
+    API_KEY: "c1380b9d0bc21019803e5db32dafbf97",
     baseUrl: "https://api-v3.igdb.com/",
     proxyUrl: "https://cors-anywhere.herokuapp.com/",
     chosenGenre: {
@@ -27,6 +29,15 @@ export const store = new Vuex.Store({
     // pages: [],
   },
   getters: {
+    installPrompt(state) {
+      return state.installPrompt;
+    },
+    canInstall(state) {
+      return (
+        "BeforeInstallPromptEvent" in window &&
+        state.installPrompt instanceof BeforeInstallPromptEvent
+      );
+    },
     gameCards(state) {
       return state.gameCards;
     },
@@ -56,6 +67,9 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
+    setInstallPrompt(state, data) {
+      state.installPrompt = data;
+    },
     setBestRating(state, data) {
       state.theBestRating = data;
     },

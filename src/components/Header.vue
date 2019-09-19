@@ -2,7 +2,10 @@
   <header class="header" :style="setBgImage">
     <div class="container d-flex jcsb">
       <div>
-        <a href="#" class="header-logo">Game<span>Box</span></a>
+        <a href="#" class="header-logo">
+          Game
+          <span>Box</span>
+        </a>
         <transition name="slideInRight" appear>
           <h1 class="header-gameTitle" style="transition-delay: 0.4s;">{{theBestGameName}}</h1>
         </transition>

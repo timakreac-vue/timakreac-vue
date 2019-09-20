@@ -1,19 +1,20 @@
 <template>
   <main class="games">
     <div class="container">
-      <h2 class="games-title">Жанр: {{chosenGenre.name}}</h2>
+      <h2 class="games-title">Genre: {{chosenGenre.name}}</h2>
 
       <div class="games-cards">
         <div class="games-card" v-for="(card,index) in gameCards" :key="index">
           <div class="games-card_img">
-            <img :src="gameImages[index]" :alt="card.slug" />
+            <img :src="cardCover(index)" alt="1" />
+            <span>{{card.release_dates[0].y}}</span>
           </div>
           <div class="games-cardBody">
-            <h3 class="games-cardBody_title">{{ card.name }}</h3>
-            <p class="games-cardBody_genre">{{chosenGenre.name}}</p>
-            <div
-              class="games-cardBody_rating"
-            >{{ card.total_rating ? parseInt(card.total_rating) : 'N/A'}}</div>
+            <h3 class="games-cardBody_title">
+              <a href="#">{{ card.name }}</a>
+            </h3>
+            <p class="games-cardBody_genre">{{card.genres[0].name}}</p>
+            <div class="games-cardBody_rating">{{ parseInt(card.total_rating) }}</div>
           </div>
         </div>
       </div>
@@ -31,21 +32,16 @@ export default {
   created() {
     this.$store.dispatch("getGameCards");
   },
-  beforeUpdate() {
-    const cards = document.querySelectorAll(".games-cardBody_rating");
-    const cardRatings = [];
-    cards.forEach(card => {
-      cardRatings.push(card.textContent);
-    });
-    const theBest = cardRatings.reduce(
-      (result, number) => (number > result ? number : result),
-      0
-    );
-    this.$store.commit("setBestRating", theBest);
-    this.$store.commit("setCardCount", cards.length);
-  },
   computed: {
-    ...mapGetters(["gameCards", "gameImages", "chosenGenre"])
+    ...mapGetters(["gameCards", "chosenGenre"])
+  },
+  methods: {
+    cardCover(index) {
+      let hash = this.gameCards[index].cover.image_id;
+      let size = "720p";
+      let coverMask = `https://images.igdb.com/igdb/image/upload/t_${size}/${hash}.jpg`;
+      return coverMask;
+    }
   }
 };
 </script>

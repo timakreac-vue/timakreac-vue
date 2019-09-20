@@ -10,20 +10,14 @@ export const store = new Vuex.Store({
     API_KEY: "c1380b9d0bc21019803e5db32dafbf97",
     baseUrl: "https://api-v3.igdb.com/",
     proxyUrl: "https://cors-anywhere.herokuapp.com/",
+    gameCards: [],
+    theBestCard: "",
+    cardLength: 0,
     chosenGenre: {
-      name: "",
-      id: null
+      id: null,
+      name: ""
     },
-    isGenreChosen: false,
-    theBestRating: null,
-    theBestCompany: "Company",
-    theDateOfReleaseGame: "date",
-    cardCount: null,
-    limit: 10,
-    topScreenshot: "",
-    gameImages: [],
-    gameCards: []
-    // gameScreenshots: []
+    isGenreChosen: false
     // page: 1,
     // perPage: 9,
     // pages: [],
@@ -41,171 +35,64 @@ export const store = new Vuex.Store({
     gameCards(state) {
       return state.gameCards;
     },
-    gameImages(state) {
-      return state.gameImages;
+    theBestCard(state) {
+      return state.theBestCard;
     },
-    topScreenshot(state) {
-      return state.topScreenshot;
-    },
-    theBestRating(state) {
-      return state.theBestRating;
+    cardLength(state) {
+      return state.cardLength;
     },
     chosenGenre(state) {
       return state.chosenGenre;
     },
-    cardCount(state) {
-      return state.cardCount;
-    },
     isGenreChosen(state) {
       return state.isGenreChosen;
-    },
-    theBestCompany(state) {
-      return state.theBestCompany;
-    },
-    theDateOfReleaseGame(state) {
-      return state.theDateOfReleaseGame;
     }
   },
   mutations: {
     setInstallPrompt(state, data) {
       state.installPrompt = data;
     },
-    setBestRating(state, data) {
-      state.theBestRating = data;
-    },
-    setChosenGenre(state, data) {
-      state.chosenGenre.name = data[1];
-      state.chosenGenre.id = data[0];
-      state.isGenreChosen = true;
-    },
-    setCardCount(state, data) {
-      state.cardCount = data;
-    },
     setGameCards(state, data) {
       state.gameCards = data;
+      state.cardLength = data.length;
     },
-    setTopScreenshot(state, data) {
-      let size = "1080p";
-      let hash = data;
-      let screenshot = `https://images.igdb.com/igdb/image/upload/t_${size}/${hash}.jpg`;
-      state.topScreenshot = screenshot;
+    setTheBestCard(state, data) {
+      state.theBestCard = data;
     },
-    setCardImages(state, data) {
-      let gameCards = state.gameCards;
-      let size = "720p";
-      for (let i = 0; i < gameCards.length; i++) {
-        for (let j = gameCards.length - 1; j >= 0; j--) {
-          if (gameCards[i].cover === data[j].id) {
-            let hash = data[j].image_id;
-            state.gameImages.push(
-              `https://images.igdb.com/igdb/image/upload/t_${size}/${hash}.jpg`
-            );
-          }
-        }
-      }
-    },
-    setTheBestCompany(state, data) {
-      state.theBestCompany = data;
-    },
-    setTheDateOfReleaseGame(state, data) {
-      state.theDateOfReleaseGame = data;
+    setChosenGenre(state, data) {
+      state.chosenGenre.id = data[0];
+      state.chosenGenre.name = data[1];
+      state.isGenreChosen = true;
     }
   },
   actions: {
-    getGameCards(context) {
-      axios(context.state.proxyUrl + context.state.baseUrl + "games", {
+    getGameCards({ commit, state }) {
+      axios(state.proxyUrl + state.baseUrl + "games", {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "user-key": context.state.API_KEY
+          "user-key": state.API_KEY
         },
-        data: `f name,cover,genres,total_rating,screenshots,involved_companies;
-        w involved_companies != null & screenshots != null & total_rating != null & genres = (${context.state.chosenGenre.id}) & cover != null;limit ${context.state.limit};`
+        data: `f name, cover.image_id, genres.name,total_rating, screenshots.image_id, involved_companies.company.name, release_dates.human,release_dates.y;
+        w cover != null & total_rating != null & screenshots != null & involved_companies != null & release_dates != null
+        & genres = ${state.chosenGenre.id};
+        limit 12;`
       })
-        .then(response => {
-          context.commit("setGameCards", response.data);
-          let covers = [];
-          for (let i = 0; i < response.data.length; i++) {
-            covers.push(response.data[i].cover);
+        .then(res => {
+          let max = res.data[0].total_rating;
+          let theBestCard = res.data[0];
+          for (let i = 1; i < res.data.length; i++) {
+            if (res.data[i].total_rating > max) {
+              max = res.data[i].total_rating;
+              theBestCard = res.data[i];
+            }
           }
-          return covers;
-        })
-        .then(covers => {
-          axios(context.state.proxyUrl + context.state.baseUrl + "covers", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Access-Control-Allow-Origin": "*",
-              "user-key": context.state.API_KEY
-            },
-            data: `f image_id;where id = (${covers});limit ${context.state.limit};`
-          }).then(response => {
-            context.commit("setCardImages", response.data);
-          });
+          commit("setGameCards", res.data);
+          commit("setTheBestCard", theBestCard);
         })
         .catch(err => {
-          console.log("ошибка" + err);
+          console.log(err);
         });
-    },
-    getTopScreenshot(context, data) {
-      axios(context.state.proxyUrl + context.state.baseUrl + "screenshots", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "user-key": context.state.API_KEY
-        },
-        data: `f image_id;w id = ${data};limit 1;`
-      }).then(response => {
-        context.commit("setTopScreenshot", response.data[0].image_id);
-      });
-    },
-    getTheBestCompany(context, data) {
-      axios(
-        context.state.proxyUrl + context.state.baseUrl + "involved_companies",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "user-key": context.state.API_KEY
-          },
-          data: `f company;w game = ${data};limit 1;`
-        }
-      )
-        .then(response => {
-          return response.data[0].company;
-        })
-        .then(data => {
-          axios(context.state.proxyUrl + context.state.baseUrl + "companies", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Access-Control-Allow-Origin": "*",
-              "user-key": context.state.API_KEY
-            },
-            data: `f name;w id = ${data};limit 1;`
-          }).then(response => {
-            context.commit("setTheBestCompany", response.data[0].name);
-          });
-        })
-        .catch(err => {
-          console.log("ошибка" + err);
-        });
-    },
-    getTheDateOfReleaseGame(context, data) {
-      axios(context.state.proxyUrl + context.state.baseUrl + "release_dates", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "user-key": context.state.API_KEY
-        },
-        data: `f human; w game = ${data};limit 1;`
-      }).then(response => {
-        context.commit("setTheDateOfReleaseGame", response.data[0].human);
-      });
     }
   }
 });

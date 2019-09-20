@@ -1,5 +1,5 @@
 <template>
-  <header class="header" :style="setBgImage">
+  <header class="header" :style="theBestBg">
     <div class="container d-flex jcsb">
       <div>
         <a href="#" class="header-logo">
@@ -7,16 +7,23 @@
           <span>Box</span>
         </a>
         <transition name="slideInRight" appear>
-          <h1 class="header-gameTitle" style="transition-delay: 0.4s;">{{theBestGameName}}</h1>
+          <h1
+            class="header-gameTitle"
+            style="transition-delay: 0.4s;"
+          >{{theBestCard.name ? theBestCard.name : 'Name of the game'}}</h1>
         </transition>
         <transition name="slideInRight" appear>
           <div class="header-gameInfo" style="transition-delay: 0.6s;">
-            <span class="header-gameInfo_date">{{theDateOfReleaseGame}}</span>
-            <span class="header-gameInfo_studio">{{theBestCompany}}</span>
+            <span
+              class="header-gameInfo_date"
+            >{{theBestCard.release_dates ? theBestCard.release_dates[0].human : 'date'}}</span>
+            <span
+              class="header-gameInfo_studio"
+            >{{theBestCard.involved_companies ? theBestCard.involved_companies[0].company.name : 'company'}}</span>
           </div>
         </transition>
-        <transition name="slideInRight" appear>
-          <a href="#" class="header-btn" style="transition-delay: 0.8s;">View info</a>
+        <transition name="slideInRightBtn" appear>
+          <a href="#" class="header-btn">View info</a>
         </transition>
       </div>
       <transition name="slideInLeft" appear>
@@ -24,11 +31,13 @@
           <div>
             <h4 class="header-gameRating_title">Rating</h4>
             <p class="header-gameRating_base">
-              Based on {{ cardCount }}
+              Based on {{cardLength}}
               <br />member ratings
             </p>
           </div>
-          <span class="header-gameRating_value">{{ theBestRating }}</span>
+          <span
+            class="header-gameRating_value"
+          >{{theBestCard.total_rating ? parseInt(theBestCard.total_rating) : '0'}}</span>
         </div>
       </transition>
     </div>
@@ -40,37 +49,18 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
-    return {
-      theBestGameName: "."
-    };
-  },
-  beforeUpdate() {
-    for (let i = 0; i < this.gameCards.length; i++) {
-      if (parseInt(this.gameCards[i].total_rating) === +this.theBestRating) {
-        this.theBestGameName = this.gameCards[i].name;
-        this.$store.dispatch(
-          "getTopScreenshot",
-          this.gameCards[i].screenshots[0]
-        );
-        this.$store.dispatch("getTheBestCompany", this.gameCards[i].id);
-        this.$store.dispatch("getTheDateOfReleaseGame", this.gameCards[i].id);
-        return;
-      }
-    }
+    return {};
   },
   computed: {
-    ...mapGetters([
-      "theBestRating",
-      "cardCount",
-      "gameCards",
-      "topScreenshot",
-      "theBestCompany",
-      "theDateOfReleaseGame"
-    ]),
-    setBgImage() {
-      return {
-        background: `#000 url(${this.topScreenshot})`
-      };
+    ...mapGetters(["theBestCard", "cardLength"]),
+    theBestBg() {
+      if (this.theBestCard.screenshots) {
+        let hash = this.theBestCard.screenshots[0].image_id;
+
+        return {
+          background: `url(https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg)`
+        };
+      }
     }
   }
 };

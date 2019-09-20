@@ -24,7 +24,7 @@
       <hr />
       <div class="d-flex jcsb aic">
         <span class="designed">Designed by ITL</span>
-        <button class="install" @click="onInstall" v-if="canInstall">Установить</button>
+        <button class="install" @click="onInstall" v-if="canInstall">Install as App</button>
         <div class="footer-social">
           <a href="#">
             <img src="img/facebook.svg" alt="facebook" />

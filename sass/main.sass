@@ -25,26 +25,27 @@ a
     color: #fff
     transition: 0.5s
 .header
-    padding: 40px 0 60px
+    min-height: 700px
+    padding: 50px 0 80px
     color: #fff
+    background-color: #000
     background-repeat: no-repeat
     background-size: 100%
     position: relative
-    box-shadow: inset 0 -110px 40px #000
+    box-shadow: inset 0 -140px 50px #000
     & > *
         position: relative
         z-index: 1
     &:before
         content: ''
-        background: rgba(0,0,0,0.3)
-        
+        background: rgba(0,0,0,0.4)
         width: 100%
         height: 100%
         position: absolute
         top: 0
         left: 0
     &-logo
-        margin-bottom: 360px
+        margin-bottom: 430px
         display: inline-block
         font-size: 30px
         text-transform: uppercase
@@ -81,9 +82,10 @@ a
         background-color: #0652D9
         text-transform: uppercase
         &:hover,&:focus
+            transition-delay: 0s !important
             background-color: darken(#0652D9,10%)
     &-gameRating
-        margin-top: 480px
+        margin-top: 550px
         width: 220px
         height: 80px
         border: 1px solid rgba(255,255,255,0.2)
@@ -128,12 +130,15 @@ a
         margin-right: 5px
     &-cardBody
         padding: 15px 20px 30px 20px
-        &_title
+        &_title a
+            display: block
             font-size: 20px
             line-height: 25px
             color: #494c62
             margin-bottom: 5px
             font-weight: 700
+            &:hover
+                text-decoration: underline
         &_genre
             color: #BABBC3
             font-weight: 600
@@ -161,7 +166,7 @@ a
             position: absolute
             bottom: 25px
             left: 20px
-            color: #BABBC3
+            color: #fff
             font-size: 18px
 .footer
     padding: 25px 0 30px
@@ -225,6 +230,13 @@ a
         opacity: 0
         &-active
             transition: all 0.5s
+.slideInRightBtn
+    &-enter
+        transform: translateX(-1000px)
+        opacity: 0
+        &-active
+            transition: all 0.5s
+            transition-delay: 0.8s
 .slideInLeft
     &-enter
         transform: translateX(1000px)

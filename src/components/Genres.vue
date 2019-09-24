@@ -1,9 +1,11 @@
 <template>
   <div id="genres">
-    <h2>Выберите игры по жанру:</h2>
+    <h2>Choose genre of the games:</h2>
     <ul>
       <li v-for="genre in genres" :key="genre.id">
-        <a :data-id="genre.id" @click="chosenGenre($event)">{{genre.name}}</a>
+        <router-link :to="'/games/' + genre.slug">
+          <span :data-slug="genre.slug" @click="chosenGenre($event)">{{genre.name}}</span>
+        </router-link>
       </li>
     </ul>
   </div>
@@ -16,93 +18,90 @@ export default {
       genres: [
         {
           name: "Point-and-click",
-          id: 2
+          slug: "point-and-click"
         },
         {
           name: "Fighting",
-          id: 4
+          slug: "fighting"
         },
         {
           name: "Shooter",
-          id: 5
+          slug: "shooter"
         },
         {
           name: "Music",
-          id: 7
+          slug: "music"
         },
         {
           name: "Platform",
-          id: 8
+          slug: "platform"
         },
         {
           name: "Puzzle",
-          id: 9
+          slug: "puzzle"
         },
         {
           name: "Racing",
-          id: 10
+          slug: "racing"
         },
         {
           name: "Real Time Strategy (RTS)",
-          id: 11
+          slug: "real-time-strategy-rts"
         },
         {
           name: "Role-playing (RPG)",
-          id: 12
+          slug: "role-playing-rpg"
         },
         {
           name: "Simulator",
-          id: 13
+          slug: "simulator"
         },
         {
           name: "Sport",
-          id: 14
+          slug: "sport"
         },
         {
           name: "Strategy",
-          id: 15
+          slug: "strategy"
         },
         {
           name: "Turn-based strategy (TBS)",
-          id: 16
+          slug: "turn-based-strategy-tbs"
         },
         {
           name: "Tactical",
-          id: 24
+          slug: "tactical"
         },
         {
           name: "Hack and slash/Beat 'em up",
-          id: 25
+          slug: "hack-and-slash-beat-em-up"
         },
         {
           name: "Quiz/Trivia",
-          id: 26
+          slug: "quiz-trivia"
         },
         {
           name: "Pinball",
-          id: 30
+          slug: "pinball"
         },
         {
           name: "Adventure",
-          id: 31
+          slug: "adventure"
         },
         {
           name: "Indie",
-          id: 32
+          slug: "indie"
         },
         {
           name: "Arcade",
-          id: 33
+          slug: "arcade"
         }
       ]
     };
   },
   methods: {
     chosenGenre(e) {
-      this.$store.commit("setChosenGenre", [
-        e.target.dataset.id,
-        e.target.textContent
-      ]);
+      this.$store.commit("setChosenGenre", e.target.textContent);
     }
   }
 };
@@ -110,17 +109,38 @@ export default {
 
 <style scoped>
 #genres {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
   text-align: center;
 }
 h2 {
   font-size: 26px;
   margin: 20px 0;
+  font-weight: 600;
+}
+ul {
+  margin: 0 auto;
+  max-width: 800px;
+}
+li {
+  margin: 5px 10px;
+  padding: 10px 10px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  transition: all 0.5s;
+  display: inline-block;
+}
+li:hover {
+  background: #000;
+}
+li:hover a {
+  color: #fff;
 }
 a {
   cursor: pointer;
-  display: block;
+  display: inline-block;
   color: #333;
   font-size: 18px;
-  margin: 15px 0;
 }
 </style>

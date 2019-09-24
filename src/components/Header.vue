@@ -1,8 +1,8 @@
 <template>
   <header class="header" :style="theBestBg">
     <div class="container d-flex jcsb">
-      <div>
-        <a href="#" class="header-logo">
+      <div class="d-flex col">
+        <a href="/" class="header-logo">
           Game
           <span>Box</span>
         </a>
@@ -23,7 +23,10 @@
           </div>
         </transition>
         <transition name="slideInRightBtn" appear>
-          <a href="#" class="header-btn">View info</a>
+          <router-link
+            class="header-btn"
+            :to="`/games/${chosenGenre.slug}/${theBestCard.slug}`"
+          >View info</router-link>
         </transition>
       </div>
       <transition name="slideInLeft" appear>
@@ -52,7 +55,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["theBestCard", "cardLength"]),
+    ...mapGetters(["theBestCard", "cardLength", "chosenGenre"]),
     theBestBg() {
       if (this.theBestCard.screenshots) {
         let hash = this.theBestCard.screenshots[0].image_id;

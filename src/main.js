@@ -1,24 +1,18 @@
 import Vue from "vue";
 import App from "./App.vue";
+import "../css/main.min.css";
 
 import { store } from "./store/";
-// import {router} from './routes.js';
-
-// import VueResource from 'vue-resource';
-
-// Vue.use(VueResource);
-// Vue.http.options.root = 'http://js.dmitrylavrik.ru/api/'
+import { router } from "./routes.js";
 
 new Vue({
   el: "#app",
   store,
-  // router,
+  router,
   render: h => h(App)
 });
 
-import "../css/main.min.css";
-
-navigator.serviceWorker.register("./service-worker.js");
+navigator.serviceWorker.register("/service-worker.js");
 
 let deferredPrompt;
 

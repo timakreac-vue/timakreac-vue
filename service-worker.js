@@ -1,7 +1,7 @@
-let cacheAllowed = /.+\.(js|css|png|jpg|jpeg|php|ico|json)$/;
+// let cacheAllowed = /.+\.(js|css|png|jpg|jpeg|php|ico|json)$/;
 
 self.addEventListener("fetch", function(event) {
-  console.log(event.request.url);
+  // console.log(event.request.url);
   // if (cacheAllowed.test(event.request.url)) {
   //   event.respondWith(
   //     caches.match(event.request.url).then(response => {

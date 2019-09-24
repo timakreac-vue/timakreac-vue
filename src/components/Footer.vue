@@ -27,16 +27,16 @@
         <button class="install" @click="onInstall" v-if="canInstall">Install as App</button>
         <div class="footer-social">
           <a href="#">
-            <img src="img/facebook.svg" alt="facebook" />
+            <img src="/img/facebook.svg" alt="facebook" />
           </a>
           <a href="#">
-            <img src="img/pinterest.svg" alt="pinterest" />
+            <img src="/img/pinterest.svg" alt="pinterest" />
           </a>
           <a href="#">
-            <img src="img/twitter.svg" alt="twitter" />
+            <img src="/img/twitter.svg" alt="twitter" />
           </a>
           <a href="#">
-            <img src="img/linkedin.svg" alt="linkedin" />
+            <img src="/img/linkedin.svg" alt="linkedin" />
           </a>
         </div>
       </div>

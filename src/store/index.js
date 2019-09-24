@@ -7,14 +7,15 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     installPrompt: null,
-    API_KEY: "c1380b9d0bc21019803e5db32dafbf97",
+    API_KEY: "28b94ec6927669e3e6b776aeb10d92f3",
     baseUrl: "https://api-v3.igdb.com/",
     proxyUrl: "https://cors-anywhere.herokuapp.com/",
     gameCards: [],
+    cardGameBySlug: [],
     theBestCard: "",
     cardLength: 0,
     chosenGenre: {
-      id: null,
+      slug: "",
       name: ""
     },
     isGenreChosen: false
@@ -34,6 +35,9 @@ export const store = new Vuex.Store({
     },
     gameCards(state) {
       return state.gameCards;
+    },
+    cardGameBySlug(state) {
+      return state.cardGameBySlug;
     },
     theBestCard(state) {
       return state.theBestCard;
@@ -60,9 +64,14 @@ export const store = new Vuex.Store({
       state.theBestCard = data;
     },
     setChosenGenre(state, data) {
-      state.chosenGenre.id = data[0];
-      state.chosenGenre.name = data[1];
+      state.chosenGenre.name = data;
       state.isGenreChosen = true;
+    },
+    setGameSlug(state, data) {
+      state.chosenGenre.slug = data;
+    },
+    setCardGameBySlug(state, data) {
+      state.cardGameBySlug = data;
     }
   },
   actions: {
@@ -73,9 +82,9 @@ export const store = new Vuex.Store({
           Accept: "application/json",
           "user-key": state.API_KEY
         },
-        data: `f name, cover.image_id, genres.name,total_rating, screenshots.image_id, involved_companies.company.name, release_dates.human,release_dates.y;
-        w cover != null & total_rating != null & screenshots != null & involved_companies != null & release_dates != null
-        & genres = ${state.chosenGenre.id};
+        data: `f name, slug, cover.image_id, genres.name, genres.slug, total_rating, screenshots.image_id, involved_companies.company.name, release_dates.human,release_dates.y;
+        w cover != null & total_rating != null & screenshots != null & involved_companies != null & release_dates != null & summary != null
+        & genres.slug = "${state.chosenGenre.slug}";
         limit 12;`
       })
         .then(res => {
@@ -89,6 +98,26 @@ export const store = new Vuex.Store({
           }
           commit("setGameCards", res.data);
           commit("setTheBestCard", theBestCard);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getCardGameBySlug({ commit, state }, data) {
+      axios(state.proxyUrl + state.baseUrl + "games", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "user-key": state.API_KEY
+        },
+        data: `f name, slug, summary,platforms.abbreviation, cover.image_id, genres.name, genres.slug, total_rating, screenshots.image_id, involved_companies.company.name, release_dates.human;
+        w cover != null & total_rating != null & screenshots != null & involved_companies != null & release_dates != null 
+        & slug = "${data}";
+        limit 1;`
+      })
+        .then(res => {
+          console.log(res.data[0]);
+          commit("setCardGameBySlug", res.data[0]);
         })
         .catch(err => {
           console.log(err);

@@ -15,6 +15,8 @@
     justify-content: space-between
 .aic
     align-items: center
+.col
+    flex-direction: column
 hr
     opacity: 0.2
 body
@@ -25,7 +27,7 @@ a
     color: #fff
     transition: 0.5s
 .header
-    min-height: 700px
+    max-height: 800px
     padding: 50px 0 80px
     color: #fff
     background-color: #000
@@ -45,8 +47,9 @@ a
         top: 0
         left: 0
     &-logo
-        margin-bottom: 430px
         display: inline-block
+        margin-bottom: auto
+        display: flex
         font-size: 30px
         text-transform: uppercase
         & > span
@@ -85,7 +88,7 @@ a
             transition-delay: 0s !important
             background-color: darken(#0652D9,10%)
     &-gameRating
-        margin-top: 550px
+        margin-top: 600px
         width: 220px
         height: 80px
         border: 1px solid rgba(255,255,255,0.2)
@@ -107,6 +110,11 @@ a
 .games
     background-color: #F8F8F8
     padding: 50px 0 50px
+    &-changeGenre
+        display: inline-block
+        color: #333
+        font-size: 16px
+        margin-bottom: 10px
     &-title
         font-size: 24px
         color: #0652d9
@@ -125,11 +133,11 @@ a
         flex-direction: column
         max-width: 290px
         position: relative
-        min-height: 480px
+        min-height: 500px
         margin-left: 5px
         margin-right: 5px
     &-cardBody
-        padding: 15px 20px 30px 20px
+        padding: 15px 20px 50px 20px
         &_title a
             display: block
             font-size: 20px
@@ -154,7 +162,7 @@ a
             font-size: 14px
             color: #0652d9
             position: absolute
-            bottom: 20px
+            bottom: 10px
             right: 20px
     &-card_img
         position: relative

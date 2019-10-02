@@ -17,8 +17,7 @@ export const store = new Vuex.Store({
     chosenGenre: {
       slug: "",
       name: ""
-    },
-    isGenreChosen: false
+    }
     // page: 1,
     // perPage: 9,
     // pages: [],
@@ -47,9 +46,6 @@ export const store = new Vuex.Store({
     },
     chosenGenre(state) {
       return state.chosenGenre;
-    },
-    isGenreChosen(state) {
-      return state.isGenreChosen;
     }
   },
   mutations: {
@@ -65,7 +61,6 @@ export const store = new Vuex.Store({
     },
     setChosenGenre(state, data) {
       state.chosenGenre.name = data;
-      state.isGenreChosen = true;
     },
     setGameSlug(state, data) {
       state.chosenGenre.slug = data;

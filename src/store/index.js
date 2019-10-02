@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     installPrompt: null,
-    API_KEY: "c1380b9d0bc21019803e5db32dafbf97",
+    API_KEY: "a39161e3f6d0ef48f457839504dbaeca",
     baseUrl: "https://api-v3.igdb.com/",
     proxyUrl: "https://cors-anywhere.herokuapp.com/",
     gameCards: [],
